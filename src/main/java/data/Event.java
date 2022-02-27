@@ -7,7 +7,7 @@ import java.util.List;
 
 
 @Getter
-public class Event {
+public class Event implements Comparable<Event> {
     @SerializedName("sport_event_id")
     private String sportEventId;
     @SerializedName("start_date")
@@ -38,5 +38,21 @@ public class Event {
                 ", probabilityDraw=" + probabilityDraw +
                 ", probabilityAwayTeamWinner=" + probabilityAwayTeamWinner +
                 '}';
+    }
+
+    /**
+     * Overridden compare method for comparing event objects
+     * by their highest probability end result.
+     *
+     * @param otherEvent second Event object used in comparison
+     * @return Event object with bigger wind/draw/loss probability
+     */
+    @Override
+    public int compareTo(Event otherEvent) {
+        double max1 = Math.max(probabilityAwayTeamWinner,
+                Math.max(probabilityDraw,probabilityHomeTeamWinner));
+        double max2 = Math.max(otherEvent.probabilityAwayTeamWinner,
+                Math.max(otherEvent.probabilityDraw,otherEvent.probabilityHomeTeamWinner));
+        return Double.compare(max2, max1);
     }
 }

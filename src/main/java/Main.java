@@ -4,6 +4,7 @@ import data.JsonData;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.Collections;
 
 public class Main {
     public static void main(String[] args) throws FileNotFoundException {
@@ -11,5 +12,7 @@ public class Main {
         Gson gson = new Gson();
 
         JsonData data = gson.fromJson(reader, JsonData.class);
+
+        Collections.sort(data.events);
     }
 }
