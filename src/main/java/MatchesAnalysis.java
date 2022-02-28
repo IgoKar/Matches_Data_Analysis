@@ -7,11 +7,13 @@ import java.util.Collections;
 
 public class MatchesAnalysis {
 
-    public void getBestMatches (int eventsNum, JsonData data){
+    public static boolean getBestMatches (int eventsNum, JsonData data){
 
-        if(eventsNum > data.events.size()) return;
+        if(eventsNum > data.events.size()) return false;
+        if(eventsNum <= 0) return false;
 
         Collections.sort(data.events);
+
         for(int i = 0; i < eventsNum; i++) {
             Event currEvent = data.events.get(i);
 
@@ -24,21 +26,24 @@ public class MatchesAnalysis {
 
             printBestMatches(date, team1, team2, venue, result, resultProbability);
         }
+        return true;
     }
 
-    public String formatDate(String date){
+
+
+    private static String formatDate(String date){
         String day = date.substring(0,date.indexOf('T'));
         String hour = date.substring(date.indexOf('T') + 1, date.indexOf('+'));
         return day + " " + hour;
     }
 
-    public String getWinner(Competitor team1, Competitor team2, String result) {
+    private static String getWinner(Competitor team1, Competitor team2, String result) {
         if(team1.getQualifier().equals(result)) return team1.getName() + " Win";
         if(team2.getQualifier().equals(result)) return team2.getName() + " Win";
         return "Draw";
     }
 
-    public void printBestMatches(String date, Competitor team1, Competitor team2,
+    private static void printBestMatches(String date, Competitor team1, Competitor team2,
                                    Venue venue, String result, double resultProbability) {
 
         System.out.println(

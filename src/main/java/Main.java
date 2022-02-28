@@ -12,7 +12,9 @@ public class Main {
 
         JsonData data = gson.fromJson(reader, JsonData.class);
 
-        MatchesAnalysis analysis = new MatchesAnalysis();
-        analysis.getBestMatches(10, data);
+        MatchesAnalysis.getBestMatches(10, data);
+
+        UniqueTeamArray teams = new UniqueTeamArray(data);
+        teams.printUniqueTeamNames(true);
     }
 }
