@@ -29,16 +29,9 @@ public class Event implements Comparable<Event> {
     @SerializedName("probability_away_team_winner")
     private double probabilityAwayTeamWinner;
 
-    private List<Competitor> competitors;
+    private double maxProbability;
 
-    @Override
-    public String toString() {
-        return "Event{" +
-                ", probabilityHomeTeamWinner=" + probabilityHomeTeamWinner +
-                ", probabilityDraw=" + probabilityDraw +
-                ", probabilityAwayTeamWinner=" + probabilityAwayTeamWinner +
-                '}';
-    }
+    private List<Competitor> competitors;
 
     /**
      * Overridden compare method for comparing event objects
@@ -54,5 +47,22 @@ public class Event implements Comparable<Event> {
         double max2 = Math.max(otherEvent.probabilityAwayTeamWinner,
                 Math.max(otherEvent.probabilityDraw,otherEvent.probabilityHomeTeamWinner));
         return Double.compare(max2, max1);
+    }
+
+    /**
+     * Inform about most probable winner or match ended with draw.
+     *
+     * @return String notifying about winning team or draw result.
+     */
+    public String getResult(){
+        double max = Math.max(probabilityAwayTeamWinner,
+                Math.max(probabilityDraw,probabilityHomeTeamWinner));
+
+        maxProbability = max;
+
+        if(max == probabilityAwayTeamWinner) return "away";
+        else if (max == probabilityHomeTeamWinner) return "home";
+
+        return "draw";
     }
 }
