@@ -48,6 +48,7 @@ public class ResultsAnalysis {
 
     private static String addBestMatch(String date, Competitor team1, Competitor team2,
                                        Venue venue, String matchResult, double resultProbability) {
+        String venueName = (venue == null) ? "No info" : venue.getName();
 
         return "Start date: "
                 + formatDate(date)
@@ -58,7 +59,7 @@ public class ResultsAnalysis {
                 + " (" + team2.getCountry() +")"
                 + "<br />"
                 + "Venue: "
-                + venue.getName()
+                + venueName
                 + "<br />"
                 + "Highest probable result: "
                 + getWinner(team1, team2, matchResult)
