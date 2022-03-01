@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html lang="pl-PL">
+<head>
+    <title>Matches Data Analysis</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+<h1>Matches Data Analysis</h1>
+
+<script>
+    function changeEventsParam() {
+        var userInput = document.getElementById('userInput').value;
+        var link = document.getElementById('link');
+        link.href = "http://localhost:8080/bestMatches?eventsNum=" + userInput;
+        window.location = "http://localhost:8080/bestMatches?eventsNum=" + userInput;
+    }
+</script>
+
+<a href="" id=link></a>
+<input type='text' id='userInput' value='' placeholder="Number of events"/>
+<input type='button' onclick='changeEventsParam()' value='Change Events Number' />
+<br><br>
+
+<a href="/getTeams?sorted=true">Get sorted team names</a>
+<br>
+<a href="/getTeams?sorted=false">Get unsorted team names</a>
+</body>
+
+</html>
