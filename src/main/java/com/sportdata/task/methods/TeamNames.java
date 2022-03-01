@@ -1,22 +1,24 @@
-import data.Competitor;
-import data.Event;
-import data.JsonData;
+package com.sportdata.task.methods;
+
+import com.sportdata.task.data.Competitor;
+import com.sportdata.task.data.Event;
+import com.sportdata.task.data.JsonData;
+import com.sportdata.task.data.JsonDataDeserializer;
 import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 @Getter
-public class UniqueTeamArray {
+public class TeamNames {
     private final ArrayList<Competitor> uniqueTeamNames = new ArrayList<>();
 
     /**
-     * UniqueTeamArray constructor;
+     * methods.TeamNames constructor;
      * Retrieves unique teams from specified data file.
-     * @param data - data acquired from Json file
      */
-    public UniqueTeamArray(JsonData data){
-        retrieveTeamsFromJson(data);
+    public TeamNames(){
+        retrieveTeamsFromJson();
     }
 
     /**
@@ -24,11 +26,11 @@ public class UniqueTeamArray {
      * and adding unique ones to the ArrayList
      * with the use of method addUniqueTeamNames
      *
-     * @param data Json file data
      * @see #addUniqueTeamNames(Competitor, Competitor)
      */
 
-    private void retrieveTeamsFromJson (JsonData data) {
+    private void retrieveTeamsFromJson() {
+        JsonData data = JsonDataDeserializer.deserialize();
         for(Event event : data.events) {
             Competitor team1 = event.getCompetitors().get(0);
             Competitor team2 = event.getCompetitors().get(1);
@@ -48,16 +50,16 @@ public class UniqueTeamArray {
     }
 
     /**
-     * Method to print all unique team name found in Json file in ascending sorted order.
+     * Method to retrieve all unique team name found in Json file in ascending sorted order(if isSorted == true).
      *
      * @param isSorted allows us to print sorted and unsorted list of teams
      */
-    public void printUniqueTeamNames(boolean isSorted) {
-
-        if(isSorted) Collections.sort(uniqueTeamNames);
-
-        for(Competitor team : uniqueTeamNames) {
-            System.out.println(team.getName());
+    public ArrayList<Competitor> getUniqueTeamNames(boolean isSorted) {
+        ArrayList<Competitor> copy = new ArrayList<>(uniqueTeamNames);
+        if(isSorted) {
+            Collections.sort(copy);
         }
+
+        return copy;
     }
 }

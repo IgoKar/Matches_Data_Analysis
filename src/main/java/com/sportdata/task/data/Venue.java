@@ -1,4 +1,4 @@
-package data;
+package com.sportdata.task.data;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;

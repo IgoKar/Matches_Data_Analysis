@@ -1,16 +1,19 @@
-import data.Competitor;
-import data.Event;
-import data.JsonData;
-import data.Venue;
+package com.sportdata.task.methods;
+
+
+import com.sportdata.task.data.*;
 
 import java.util.Collections;
 
-public class MatchesAnalysis {
+public class ResultsAnalysis {
 
-    public static boolean getBestMatches (int eventsNum, JsonData data){
+    public static String getBestMatches (int eventsNum){
+        JsonData data = JsonDataDeserializer.deserialize();
+        String result = "";
 
-        if(eventsNum > data.events.size()) return false;
-        if(eventsNum <= 0) return false;
+        if(data == null) return "Error: NullPointerException";
+        if(eventsNum > data.events.size()) return "Error: Events num can't be > events number.";
+        if(eventsNum <= 0) return "Error: Events num can't be <= 0.";
 
         Collections.sort(data.events);
 
@@ -21,12 +24,12 @@ public class MatchesAnalysis {
             Competitor team1 = currEvent.getCompetitors().get(0);
             Competitor team2 = currEvent.getCompetitors().get(1);
             Venue venue = currEvent.getVenue();
-            String result = currEvent.getResult();
+            String matchResult = currEvent.getResult();
             double resultProbability = currEvent.getMaxProbability();
 
-            printBestMatches(date, team1, team2, venue, result, resultProbability);
+            result += "\n" + (addBestMatch(date, team1, team2, venue, matchResult, resultProbability)) + "\n";
         }
-        return true;
+        return result;
     }
 
 
@@ -43,26 +46,23 @@ public class MatchesAnalysis {
         return "Draw";
     }
 
-    private static void printBestMatches(String date, Competitor team1, Competitor team2,
-                                   Venue venue, String result, double resultProbability) {
+    private static String addBestMatch(String date, Competitor team1, Competitor team2,
+                                       Venue venue, String matchResult, double resultProbability) {
 
-        System.out.println(
-                "\nStart date: "
+        return "Start date: "
                 + formatDate(date)
-                + "\n"
+                + "<br />"
                 + team1.getName()
                 + " (" + team1.getCountry() + ") vs. "
                 + team2.getName()
                 + " (" + team2.getCountry() +")"
-                + "\n"
+                + "<br />"
                 + "Venue: "
                 + venue.getName()
-                + "\n"
+                + "<br />"
                 + "Highest probable result: "
-                + getWinner(team1, team2, result)
+                + getWinner(team1, team2, matchResult)
                 + " (" + resultProbability +")"
-                + "\n____________________________________"
-        );
+                + "<br /><br />";
     }
-
 }

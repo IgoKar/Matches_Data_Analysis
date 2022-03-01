@@ -1,9 +1,11 @@
-package data;
+package com.sportdata.task.data;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class Competitor implements Comparable<Competitor>{
     /**
      * Data aquired from Json file
