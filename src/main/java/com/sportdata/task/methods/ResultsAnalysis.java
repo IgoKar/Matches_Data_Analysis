@@ -12,8 +12,13 @@ public class ResultsAnalysis {
         String result = "";
 
         if(data == null) return "Error: NullPointerException";
-        if(eventsNum > data.events.size()) return "Error: Events num can't be > events number.";
         if(eventsNum <= 0) return "Error: Events num can't be <= 0.";
+        if(eventsNum > data.events.size()) return "Error: The specified value exceeds the number of results in the file."
+                                                + "<br>Given {"
+                                                + eventsNum
+                                                + "} Found {"
+                                                + data.events.size()
+                                                + "}";
 
         Collections.sort(data.events);
 
